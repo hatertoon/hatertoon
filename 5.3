@@ -1,0 +1,99 @@
+package employee;
+import java.util.*;
+public class Command3 {
+	 public static void main(String [] args) {
+		 
+		 int id;
+		 double income;
+		 
+		 Scanner input = new Scanner(System.in);
+
+		 System.out.print("Enter your id: ");
+		 id = input.nextInt();
+		 
+		 System.out.print("Enter your income: ");
+		 income = input.nextDouble();
+		 
+		 if (id >= 10) {
+			 
+		 Worker emp = new Worker();
+		 emp.setID(id);
+		 emp.setIncome(income);
+		 emp.calBonus();
+		 
+		 System.out.printf("You are Worker, ID %d.\n", emp.getID());
+		 System.out.printf("If your income is %.2f, ", emp.getIncome());
+		 System.out.printf("you'll get %.2f Baht for Bonus!!\n",emp.getBonus());
+		 
+		 } else if(id > 0) {
+			 
+			 Manager emp = new Manager();
+	            emp.setID(id);
+	            emp.setIncome(income);
+	            emp.calTax();
+	            System.out.printf("You are Manager, ID %d.\n", emp.getID());
+	            System.out.printf("If your income is %.2f, ", emp.getIncome());
+	            System.out.printf("you'll pay %.2f Baht for Tax!!\n", emp.getTax());
+		 } else {
+			 
+			 System.out.printf("Invalid ID %d!!\n", id);
+		 }
+	} // End of main()
+} // End of class()
+
+*******************************************************************************************
+package employee;
+
+public class Employee {
+    protected double income;
+    protected int id;
+
+    public void setID(int id) {
+        this.id = id;
+    }
+
+    public int getID() {
+        return id;
+    }
+
+    public void setIncome(double income) {
+        this.income = income;
+    }
+
+    public double getIncome() {
+        return income;
+    }
+}
+*******************************************************************************************
+package employee;
+
+public class Manager extends Employee {
+    private double tax;
+
+    public void calTax() {
+        if (income > 50000) {
+            tax = income * 0.04;
+        } else {
+            tax = income * 0.03;
+        }
+    }
+
+    public double getTax() {
+        return tax;
+    }
+}
+*******************************************************************************************
+package employee;
+
+public class Worker extends Employee {
+    private double bonus;
+
+    // ปรับเมธอดคำนวณโบนัสให้เป็น 4 เท่าของรายได้
+    public void calBonus() {
+        bonus = income * 4.0;
+    }
+
+    public double getBonus() {
+        return bonus;
+    }
+}
