@@ -1,0 +1,107 @@
+package exchange;
+
+import java.io.*;
+import java.util.Scanner;
+
+public class Command {
+    public static void main(String[] args) {
+        // กำหนดเส้นทางไฟล์
+        String inputFilePath = "D:/ExchangeList.txt";
+        String outputFilePath = "D:/ThaiBaht.txt";
+
+        // สร้างออบเจ็กต์ Exchange
+        Exchange exchange = new Exchange();
+
+        try {
+            // อ่านข้อมูลจากไฟล์นำเข้า
+            File inputFile = new File(inputFilePath);
+            Scanner fileReader = new Scanner(inputFile);
+
+            // สร้างตัวเขียนสำหรับไฟล์ผลลัพธ์
+            FileWriter fileWriter = new FileWriter(outputFilePath);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+            double totalBaht = 0.0; // ตัวแปรสำหรับผลรวมเงินบาท
+
+            // อ่านแต่ละบรรทัดในไฟล์
+            while (fileReader.hasNextLine()) {
+                String line = fileReader.nextLine();
+                String[] parts = line.split(" "); // แยกจำนวนเงินและสกุลเงิน
+
+                double amount = Double.parseDouble(parts[0]);
+                String currency = parts[1].toUpperCase();
+
+                double convertedAmount = 0.0;
+
+                // แปลงสกุลเงิน
+                switch (currency) {
+                    case "USD":
+                        convertedAmount = exchange.exchangeUSD(amount);
+                        break;
+                    case "EURO":
+                        convertedAmount = exchange.exchangeEURO(amount);
+                        break;
+                    case "YEN":
+                        convertedAmount = exchange.exchangeYEN(amount);
+                        break;
+                    case "POUND":
+                        convertedAmount = exchange.exchangePOUND(amount);
+                        break;
+                    default:
+                        System.out.println("Unknown currency: " + currency);
+                        continue;
+                }
+
+                // เขียนผลลัพธ์ลงไฟล์
+                bufferedWriter.write(line + " = " + String.format("%.2f", convertedAmount) + " Baht");
+                bufferedWriter.newLine();
+
+                // เพิ่มยอดเงินรวม
+                totalBaht += convertedAmount;
+            }
+
+            // เขียนผลรวมเงินบาท
+            bufferedWriter.write(">>> Summation = " + String.format("%.2f", totalBaht) + " Baht");
+            bufferedWriter.newLine();
+
+            // ปิดตัวอ่านและตัวเขียน
+            fileReader.close();
+            bufferedWriter.close();
+
+            System.out.println("Conversion completed. Results saved to " + outputFilePath);
+
+        } catch (FileNotFoundException e) {
+            System.out.println("ไม่พบไฟล์นำเข้า: " + inputFilePath);
+        } catch (IOException e) {
+            System.out.println("เกิดข้อผิดพลาดในการเขียนไฟล์: " + outputFilePath);
+        }
+    }
+}
+***************************************************************************************
+
+package exchange;
+
+public class Exchange {
+    // กำหนดอัตราแลกเปลี่ยน
+    final double USD = 30.72;
+    final double EURO = 41.89;
+    final double YEN = 36.97;
+    final double POUND = 48.34;
+
+    // เมธอดแปลงสกุลเงินต่างๆ เป็นเงินบาท
+    public double exchangeUSD(double amount) {
+        return amount * USD;
+    }
+
+    public double exchangeEURO(double amount) {
+        return amount * EURO;
+    }
+
+    public double exchangeYEN(double amount) {
+        return amount * YEN;
+    }
+
+    public double exchangePOUND(double amount) {
+        return amount * POUND;
+    }
+}
