@@ -1,0 +1,51 @@
+package grade;
+import java.io.*;
+import java.util.Scanner;
+
+public class Command2 {
+    public static void main(String[] args) {
+        // ระบุเส้นทางไฟล์
+        String filePath = "D:/Grade.txt";
+
+        try {
+            // อ่านข้อมูลจากไฟล์
+            File file = new File(filePath);
+            Scanner fileReader = new Scanner(file);
+
+            // รับข้อมูลเกรดจากผู้ใช้
+            Scanner input = new Scanner(System.in);
+            System.out.print("Enter a grade: ");
+            String gradeInput = input.nextLine().toUpperCase();
+
+            System.out.println("ผลลัพธ์:");
+            boolean found = false;
+
+            // อ่านข้อมูลแต่ละบรรทัดในไฟล์
+            while (fileReader.hasNextLine()) {
+                String line = fileReader.nextLine();
+                String[] parts = line.split(" "); // แยกชื่อและเกรดด้วยช่องว่าง
+                String name = parts[0];
+                String grade = parts[1];
+                String score = parts[2];
+
+                // ตรวจสอบว่าตรงกับเกรดที่ป้อนหรือไม่
+                if (grade.equals(gradeInput)) {
+                    System.out.println(name + " " + score);
+                    found = true;
+                }
+            }
+
+            // กรณีไม่พบข้อมูล
+            if (!found) {
+                System.out.println("ไม่มีนักเรียนที่มีเกรดนี้ในข้อมูล");
+            }
+
+            // ปิดตัวอ่าน
+            fileReader.close();
+            input.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("ไม่พบไฟล์ที่ระบุ: " + filePath);
+        }
+    }
+}
