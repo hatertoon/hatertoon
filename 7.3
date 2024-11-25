@@ -1,0 +1,96 @@
+package shape;
+
+import java.util.Scanner;
+
+abstract public class Shape {
+	
+	abstract public float area();
+	abstract public double parimeter();
+	
+    public static void main(String[] args) {
+    	float x = 0;
+        Scanner input = new Scanner(System.in);
+        
+        System.out.print("Enter the x value: ");
+        x = input.nextFloat();
+
+        Square sq = new Square(x);
+        Circle cc = new Circle(x);
+        Triangle tag = new Triangle(x);
+
+        
+        System.out.printf("Square: area = %.2f, perimeter = %.2f\n", sq.area(), sq.perimeter());
+        System.out.printf("Circle: area = %.2f, perimeter = %.2f\n", cc.area(), cc.perimeter());
+        System.out.printf("Triangle: area = %.2f, perimeter = %.2f\n", tag.area(), tag.perimeter());
+
+    }
+}
+
+*****************************************************************************
+
+package shape;
+
+public class Square {
+	float side = 0;
+	
+    public Square(float x) {
+        side = x;
+    }
+
+    public float area() {
+        return side*side;
+    }
+
+    public double perimeter() {
+        return 4*side; 
+    }
+}
+
+*****************************************************************************
+
+package shape;
+
+public class Circle {
+	float radius = 0;
+	final float PI = (float) (22.0/7);
+	
+    public Circle(float x) {
+    	radius = (float) (x/2.0);
+    }
+
+    public float area() {
+        return PI*radius*radius;
+    }
+
+    public double perimeter() {
+        return 2*PI*radius;
+    }
+}
+
+*****************************************************************************
+
+package shape;
+
+public class Triangle {
+	
+	float height = 0, base = 0;
+	
+    public Triangle(float x) {
+    	height = x;
+    	base = x;
+    }
+
+    public float area() {
+        return (float) 1/2*base*height;
+    }
+
+    public double perimeter() {
+    	double A, B, C;
+    	
+    	A = base/2.0;
+    	B = height;
+    	C = Math.sqrt((Math.pow(A,2) + Math.pow(B,2)));
+    	
+        return C + C + base;
+    }
+}
