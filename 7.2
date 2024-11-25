@@ -1,0 +1,88 @@
+package employee;
+
+import java.util.Scanner;
+
+public class Command2 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Employee emp = null;
+
+        System.out.print("Enter your id: ");
+        int id = sc.nextInt();
+
+        System.out.print("Enter your salary: ");
+        double salary = sc.nextDouble();
+
+        if (id <= 0) {
+            System.out.println("Invalid ID -" + id + "!!");
+        } else if (id <= 500) {
+            emp = new Manager();
+        } else {
+            emp = new Worker();
+        }
+
+        if (emp != null) {
+            emp.setID(id);
+            emp.setSalary(salary);
+            double newSalary = emp.calSalary();
+            System.out.printf("You are %s.\n", emp instanceof Manager ? "Manager" : "Worker");
+            System.out.printf("Your new salary is %.2f Baht.\n", newSalary);
+        }
+
+        sc.close();
+    }
+}
+
+*******************************************************************************************
+
+package employee;
+
+abstract public class Employee {
+	protected int id;
+	protected double salary;
+	
+	abstract double calSalary();
+	
+	public void setID(int empID) {
+		id = empID;
+	}
+	
+	public void setSalary(double empSalary) {
+		salary = empSalary;
+	}
+}
+
+*******************************************************************************************
+
+package employee;
+
+public class Manager extends Employee {
+    @Override
+    double calSalary() {
+        if (id > 300) {
+            salary += salary * 0.06; // Increase by 6%
+        } else if (id <= 300) {
+            salary += salary * 0.04; // Increase by 4%
+        }
+        return salary;
+    }
+}
+
+*******************************************************************************************
+
+package employee;
+
+public class Worker extends Employee {
+    @Override
+    double calSalary() {
+        if (salary >= 6000) {
+            salary += 500; // Add 500 for salary >= 6000
+        } else {
+            salary += 1000; // Add 1000 for salary < 6000
+        }
+        return salary;
+    }
+}
+
+
+
