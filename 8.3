@@ -1,0 +1,116 @@
+package shop;
+
+import java.util.Scanner;
+
+public class Command3 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // รับข้อมูลลูกค้า
+        System.out.print("Enter your customer name: ");
+        String customerName = scanner.nextLine();
+        System.out.print("Enter your discount percentage: ");
+        double discount = scanner.nextDouble();
+
+        // รับข้อมูลสินค้า
+        scanner.nextLine(); // Clear buffer
+        System.out.print("Enter an ordered product: ");
+        String productName = scanner.nextLine();
+        System.out.print("Enter the product price: ");
+        double productPrice = scanner.nextDouble();
+
+        // สร้าง object Customer และ Product
+        Customer customer = new Customer();
+        customer.setName(customerName);
+        customer.setDiscount(discount);
+
+        Product product = new Product();
+        product.setName(productName);
+        product.setPrice(productPrice);
+
+        // สร้าง Order และคำนวณราคาสุทธิ
+        Order order = new Order();
+        order.setCustomer(customer);
+        order.setProduct(product);
+
+        // แสดงผลลัพธ์
+        double finalPrice = productPrice * (1 - discount / 100);
+        System.out.printf("%s orders %s with price %.2f Baht.\n",
+                customer.getName(), product.getName(), finalPrice);
+    }
+}
+
+********************************************************************************************
+
+package shop;
+
+public class Customer {
+    private String name;
+    private double discount;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
+}
+
+********************************************************************************************
+
+package shop;
+
+public class Order {
+    private Customer customer;
+    private Product product;
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+}
+
+********************************************************************************************
+
+package shop;
+
+public class Product {
+    private String name;
+    private double price;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+}
